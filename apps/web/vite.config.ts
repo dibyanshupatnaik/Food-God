@@ -77,6 +77,14 @@ export default defineConfig({
     },
     dedupe: ['react', 'react-dom'],
   },
+  build: {
+    // Target modern runtimes so top-level await in SSR build works
+    target: 'esnext',
+  },
+  ssr: {
+    // Render runs Node 18+, so enable modern syntax there too
+    target: 'node18',
+  },
   clearScreen: false,
   server: {
     allowedHosts: true,

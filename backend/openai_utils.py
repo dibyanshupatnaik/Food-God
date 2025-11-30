@@ -5,31 +5,26 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import logging
 from typing import Any, Dict, List, Sequence
 
-from pathlib import Path
 from datetime import datetime
 import httpx
 
 from .constants import NUTRIENT_KEYS, NUTRIENT_METADATA
 
-LOG_DIR = (
-    Path(__file__)
-    .resolve()
-    .parent
-    .joinpath("logs")
-)
-LOG_DIR.mkdir(exist_ok=True)
-LOG_PATH = LOG_DIR / "openai.log"
+logger = logging.getLogger("openai_utils")
+if not logger.handlers:
+    logging.basicConfig(level=logging.INFO)
 
 
 def _write_log(entry: Dict[str, Any]) -> None:
+    # Emit structured logs to stdout/stderr so Render/Netlify capture them without disk writes
     log_entry = {
         "timestamp": datetime.utcnow().isoformat(),
         **entry,
     }
-    with LOG_PATH.open("a", encoding="utf-8") as log_file:
-        log_file.write(json.dumps(log_entry) + "\n")
+    logger.info(json.dumps(log_entry))
 
 
 _client: httpx.Client | None = None

@@ -1,0 +1,14 @@
+*.pyc
+__pycache__/
+/backend/nutrition.db
+.env
+
+
+
+# Frontend artifacts
+.DS_Store
+node_modules/
+apps/web/node_modules/
+apps/web/.react-router/
+apps/web/build/
+

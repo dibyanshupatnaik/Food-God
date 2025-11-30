@@ -4,5 +4,6 @@ export default {
 	appDirectory: './src/app',
 	// Netlify is serving this as a static SPA, so disable SSR rendering.
 	ssr: false,
-	prerender: ['/*?'],
+	// Skip prerendering; Netlify will serve the client bundle only.
+	prerender: false,
 } satisfies Config;
